@@ -1,6 +1,8 @@
 package game;
 
+import core.Size;
 import display.Display;
+import game.state.GameState;
 import game.state.State;
 import input.Input;
 
@@ -16,10 +18,11 @@ public class Game {
 
         input = new Input();
         display = new Display(width, height, input);
+        state = new GameState(input, new Size(width, height));
     }
 
     public void update() {
-
+        state.update();
     }
 
     public void render() {
