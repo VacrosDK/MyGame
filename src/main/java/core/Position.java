@@ -1,27 +1,33 @@
 package core;
 
 public class Position {
-    private int x;
-    private int y;
+    private double x;
+    private double y;
 
     public Position(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public int getX() {
+    public int intX() {
+        return (int) Math.round(x);
+    }
+
+    public int intY() {
+        return (int) Math.round(y);
+    }
+    public double getX() {
         return x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
+    public void apply(Motion movement) {
+        Vector2D vector = movement.getVector();
 
-    public void setY(int y) {
-        this.y = y;
+        x += vector.getX();
+        y += vector.getY();
     }
 }

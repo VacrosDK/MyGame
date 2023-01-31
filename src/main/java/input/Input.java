@@ -20,6 +20,7 @@ public class Input implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        System.out.println("PRESS: " + e.getKeyChar());
         pressed[e.getKeyCode()] = true;
     }
 
