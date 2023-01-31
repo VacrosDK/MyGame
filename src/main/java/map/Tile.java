@@ -9,7 +9,7 @@ public class Tile {
     private Image sprite;
 
     public Tile(SpriteLibrary spriteLibrary) {
-        this.sprite = spriteLibrary.getTile("default");
+        this.sprite = spriteLibrary.getTile("wood_floor");
     }
 
     public Image getSprite() {

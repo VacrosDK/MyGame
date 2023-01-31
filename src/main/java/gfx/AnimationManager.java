@@ -7,10 +7,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class AnimationManager {
-    private SpriteSet spriteSet;
+    private final SpriteSet spriteSet;
     private BufferedImage currentAnimationSheet;
     private int currentFrameTime;
-    private int updatesPerFrame;
+    private final int updatesPerFrame;
     private int frameIndex;
     private int directionIndex;
 
