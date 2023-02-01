@@ -11,7 +11,7 @@ public class NPC extends MovingEntity{
 
     public NPC(Controller controller, SpriteLibrary spriteLibrary) {
         super(controller, spriteLibrary);
-        animationManager = new AnimationManager(spriteLibrary.getUnit("michael"));
+        animationManager = new AnimationManager(spriteLibrary.getUnit("blobbie"));
         aiManager = new AIManager();
     }
 

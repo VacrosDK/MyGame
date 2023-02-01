@@ -3,18 +3,33 @@ package display;
 import core.Position;
 import core.Size;
 import entity.GameObject;
+import game.Game;
 import game.state.State;
 
+import java.awt.*;
 import java.util.Optional;
 
 public class Camera {
 
+    private static final int SAFETY_BOUNDS = 2 * Game.SPRITE_SIZE;
+
     private Position position;
     private Size windowSize;
+
+    private Rectangle viewBounds;
 
     public Camera(Size windowSize) {
         this.position = new Position(0, 0);
         this.windowSize = windowSize;
+        calculateViewBounds();
+    }
+
+    private void calculateViewBounds() {
+        viewBounds = new Rectangle(
+                position.intX(),
+                position.intY(),
+                windowSize.getWidth() + SAFETY_BOUNDS,
+                windowSize.getHeight() + SAFETY_BOUNDS);
     }
 
     public void focusOn(GameObject object) {
@@ -29,6 +44,7 @@ public class Camera {
             this.position.setY(objectPosition.getY() - windowSize.getHeight() / 2);
 
             clampWithinBounds(state);
+            calculateViewBounds();
         }
     }
 
@@ -43,7 +59,7 @@ public class Camera {
             position.setX(state.getGameMap().getWidth() - windowSize.getWidth());
         }
         if(position.getY() + windowSize.getHeight() > state.getGameMap().getHeight()) {
-            position.setX(state.getGameMap().getHeight() - windowSize.getHeight());
+            position.setY(state.getGameMap().getHeight() - windowSize.getHeight());
         }
     }
 
@@ -51,5 +67,18 @@ public class Camera {
 
     public Position getPosition() {
         return position;
+    }
+
+    public boolean isInView(GameObject gameObject) {
+        return viewBounds.intersects(
+                gameObject.getPosition().intX(),
+                gameObject.getPosition().intY(),
+                gameObject.getSize().getWidth(),
+                gameObject.getSize().getHeight()
+        );
+    }
+
+    public Size getSize() {
+        return windowSize;
     }
 }
