@@ -1,10 +1,12 @@
 package map;
 
+import core.Position;
 import core.Size;
 import game.Game;
 import gfx.SpriteLibrary;
 
 import java.util.Arrays;
+import java.util.Random;
 
 public class GameMap {
 
@@ -31,5 +33,11 @@ public class GameMap {
 
     public double getHeight() {
         return tiles[0].length * Game.SPRITE_SIZE;
+    }
+
+    public Position getRandomPosition() {
+        double x = Math.random() * tiles.length * Game.SPRITE_SIZE;
+        double y = Math.random() * tiles[0].length * Game.SPRITE_SIZE;
+        return new Position(x, y);
     }
 }

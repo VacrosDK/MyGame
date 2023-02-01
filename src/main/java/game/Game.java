@@ -10,12 +10,11 @@ public class Game {
 
     public static final int SPRITE_SIZE = 64;
 
-    private Display display;
+    private final Display display;
     private Input input;
-    private State state;
+    private final State state;
 
     public Game(int width, int height) {
-
         input = new Input();
         display = new Display(width, height, input);
         state = new GameState(input, new Size(width, height));

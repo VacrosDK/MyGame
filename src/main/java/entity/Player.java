@@ -9,9 +9,4 @@ public class Player extends MovingEntity{
         super(controller, spriteLibrary);
     }
 
-    @Override
-    public void update() {
-        super.update();
-    }
-
 }

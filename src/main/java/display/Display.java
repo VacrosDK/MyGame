@@ -10,8 +10,8 @@ import java.awt.image.BufferStrategy;
 
 public class Display extends JFrame {
 
-    private Canvas canvas;
-    private Renderer renderer;
+    private final Canvas canvas;
+    private final Renderer renderer;
 
     public Display(int width, int height, Input input) {
         setTitle("My game.Game");
@@ -28,6 +28,7 @@ public class Display extends JFrame {
         pack();
 
         canvas.createBufferStrategy(3);
+
 
         setLocationRelativeTo(null);
         setVisible(true);

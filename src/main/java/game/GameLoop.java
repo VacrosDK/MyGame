@@ -1,14 +1,13 @@
 package game;
 
-import game.Game;
-
 public class GameLoop implements Runnable{
 
+    public static final int UPDATES_PER_SECOND = 60;
     private final Game game;
 
     private boolean isRunning;
     //TODO option i settings menu
-    private final double updateRate = 1.0d/60.0d;
+    private final double updateRate = 1.0d/UPDATES_PER_SECOND;
 
     private long nextStatTime;
     private int fps, ups;

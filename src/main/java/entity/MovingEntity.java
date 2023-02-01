@@ -3,6 +3,7 @@ package entity;
 import controller.Controller;
 import core.Direction;
 import core.Motion;
+import game.state.State;
 import gfx.AnimationManager;
 import gfx.SpriteLibrary;
 
@@ -10,10 +11,10 @@ import java.awt.*;
 
 public abstract class MovingEntity extends GameObject{
 
-    private Controller controller;
-    private Motion motion;
-    private AnimationManager animationManager;
-    private Direction direction;
+    protected Controller controller;
+    protected Motion motion;
+    protected AnimationManager animationManager;
+    protected Direction direction;
 
     public MovingEntity(Controller controller, SpriteLibrary spriteLibrary) {
         super();
@@ -21,11 +22,11 @@ public abstract class MovingEntity extends GameObject{
         //TODO Speed i settings eller config(unlock)
         this.motion = new Motion(5);
         this.direction = Direction.S;
-        animationManager = new AnimationManager(spriteLibrary.getUnit("blobbie"));
+        animationManager = new AnimationManager(spriteLibrary.getUnit("plop"));
     }
 
     @Override
-    public void update() {
+    public void update(State state) {
         motion.update(controller);
         position.apply(motion);
         manageDirection();
@@ -50,5 +51,9 @@ public abstract class MovingEntity extends GameObject{
     @Override
     public Image getSprite() {
         return animationManager.getSprite();
+    }
+
+    public Object getController() {
+        return controller;
     }
 }
