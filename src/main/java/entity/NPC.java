@@ -2,16 +2,20 @@ package entity;
 
 import ai.AIManager;
 import controller.Controller;
+import entity.action.Action;
+import entity.action.Cough;
 import game.state.State;
 import gfx.AnimationManager;
 import gfx.SpriteLibrary;
+
+import java.util.Optional;
 
 public class NPC extends MovingEntity{
     private AIManager aiManager;
 
     public NPC(Controller controller, SpriteLibrary spriteLibrary) {
         super(controller, spriteLibrary);
-        animationManager = new AnimationManager(spriteLibrary.getUnit("blobbie"));
+        animationManager = new AnimationManager(spriteLibrary.getUnit("kevin"));
         aiManager = new AIManager();
     }
 
