@@ -4,6 +4,7 @@ import core.Position;
 import core.Size;
 import display.Camera;
 import entity.GameObject;
+import entity.MovingEntity;
 import game.Time;
 import gfx.SpriteLibrary;
 import input.Input;
@@ -12,6 +13,7 @@ import map.GameMap;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class State {
 
@@ -58,5 +60,11 @@ public abstract class State {
 
     public Position getRandomPosition() {
         return gameMap.getRandomPosition();
+    }
+
+    public List<GameObject> getCollidingGameObjects(GameObject object) {
+        return gameObjectList.stream()
+                .filter(other -> other.isCollidingWith(object))
+                .collect(Collectors.toList());
     }
 }

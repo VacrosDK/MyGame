@@ -1,11 +1,11 @@
 package entity;
 
 import controller.Controller;
+import core.CollisionBox;
 import core.Direction;
 import core.Motion;
 import entity.action.Action;
 import entity.effect.Effect;
-import entity.effect.Stomachache;
 import game.state.State;
 import gfx.AnimationManager;
 import gfx.SpriteLibrary;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class MovingEntity extends GameObject{
+public abstract class MovingEntity extends GameObject {
 
     protected Controller controller;
     protected Motion motion;
@@ -42,6 +42,7 @@ public abstract class MovingEntity extends GameObject{
         animationManager.update(direction);
         effects.forEach(effect -> effect.update(state, this));
 
+        handleCollisions(state);
         manageDirection();
         decideAnimation();
 
@@ -51,8 +52,31 @@ public abstract class MovingEntity extends GameObject{
         cleanup();
     }
 
+    private void handleCollisions(State state) {
+        state.getCollidingGameObjects(this).forEach(this::handleCollision);
+    }
+
+    @Override
+    public boolean isCollidingWith(GameObject other) {
+        return getCollisionBox().collidesWith(other.getCollisionBox());
+    }
+
+    @Override
+    public CollisionBox getCollisionBox() {
+        return new CollisionBox(
+                new Rectangle(
+                        position.intX(),
+                        position.intY(),
+                        size.getWidth(),
+                        size.getHeight()
+                )
+        );
+    }
+
+    protected abstract void handleCollision(GameObject other);
+
     private void handleMotion() {
-        if(!action.isPresent()) {
+        if (!action.isPresent()) {
             motion.update(controller);
         } else {
             motion.stop();
@@ -60,14 +84,14 @@ public abstract class MovingEntity extends GameObject{
     }
 
     private void handleAction(State state) {
-        if(action.isPresent()) {
+        if (action.isPresent()) {
             action.get().update(state, this);
         }
     }
 
     private void cleanup() {
         cleanupEffects();
-        if(action.isPresent() && action.get().isDone()) {
+        if (action.isPresent() && action.get().isDone()) {
             action = Optional.empty();
         }
     }
@@ -79,17 +103,17 @@ public abstract class MovingEntity extends GameObject{
     }
 
     private void decideAnimation() {
-        if(action.isPresent()) {
+        if (action.isPresent()) {
             animationManager.playAnimation(action.get().getAnimationName());
-        }else if(motion.isMoving()) {
+        } else if (motion.isMoving()) {
             animationManager.playAnimation("walk");
-        }else {
+        } else {
             animationManager.playAnimation("stand");
         }
     }
 
     private void manageDirection() {
-        if(motion.isMoving()) {
+        if (motion.isMoving()) {
             this.direction = Direction.fromMotion(motion);
         }
     }
@@ -113,5 +137,9 @@ public abstract class MovingEntity extends GameObject{
 
     public void addEffect(Effect effect) {
         effects.add(effect);
+    }
+
+    protected void clearEffects() {
+        effects.clear();
     }
 }

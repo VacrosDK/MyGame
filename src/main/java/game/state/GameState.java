@@ -5,8 +5,6 @@ import controller.PlayerController;
 import core.Size;
 import entity.NPC;
 import entity.Player;
-import entity.action.Cough;
-import entity.effect.Effect;
 import entity.effect.Sick;
 import entity.effect.Stomachache;
 import input.Input;
@@ -24,7 +22,6 @@ public class GameState extends State{
         Player player = new Player(new PlayerController(input), spriteLibrary);
         gameObjectList.add(player);
         camera.focusOn(player);
-        player.addEffect(new Stomachache());
         initNPCs(250);
     }
 

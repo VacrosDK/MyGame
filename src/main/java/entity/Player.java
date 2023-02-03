@@ -9,4 +9,12 @@ public class Player extends MovingEntity{
         super(controller, spriteLibrary);
     }
 
+    @Override
+    protected void handleCollision(GameObject other) {
+        if(other instanceof NPC) {
+            NPC npc = (NPC) other;
+            npc.clearEffects();
+        }
+    }
+
 }
