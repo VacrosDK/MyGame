@@ -1,6 +1,7 @@
 package display;
 
-import game.Game;
+import display.renderer.DebugRenderer;
+import display.renderer.Renderer;
 import game.state.State;
 import input.Input;
 
@@ -11,13 +12,14 @@ import java.awt.image.BufferStrategy;
 public class Display extends JFrame {
 
     private final Canvas canvas;
-    private final Renderer renderer;
+    private DebugRenderer debugRenderer;
+    private final display.renderer.Renderer renderer;
 
     public Display(int width, int height, Input input) {
         setTitle("My game.Game");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
-
+        debugRenderer = new DebugRenderer();
         this.renderer = new Renderer();
 
         canvas = new Canvas();
@@ -34,7 +36,7 @@ public class Display extends JFrame {
         setVisible(true);
     }
 
-    public void render(State state) {
+    public void render(State state, boolean debugMode) {
         BufferStrategy bufferStrategy = canvas.getBufferStrategy();
         Graphics graphics = bufferStrategy.getDrawGraphics();
 
@@ -42,7 +44,9 @@ public class Display extends JFrame {
         graphics.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
         renderer.render(state, graphics);
-
+        if(debugMode) {
+            debugRenderer.render(state, graphics);
+        }
         graphics.dispose();
         bufferStrategy.show();
     }

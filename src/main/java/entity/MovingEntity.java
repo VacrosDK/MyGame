@@ -4,8 +4,10 @@ import controller.Controller;
 import core.CollisionBox;
 import core.Direction;
 import core.Motion;
+import core.Size;
 import entity.action.Action;
 import entity.effect.Effect;
+import game.Game;
 import game.state.State;
 import gfx.AnimationManager;
 import gfx.SpriteLibrary;
@@ -24,6 +26,8 @@ public abstract class MovingEntity extends GameObject {
     public List<Effect> effects;
     private Optional<Action> action;
 
+    protected Size collisionBoxSize;
+
     public MovingEntity(Controller controller, SpriteLibrary spriteLibrary) {
         super();
         this.controller = controller;
@@ -33,6 +37,7 @@ public abstract class MovingEntity extends GameObject {
         animationManager = new AnimationManager(spriteLibrary.getUnit("plop"));
         effects = new ArrayList<>();
         action = Optional.empty();
+        collisionBoxSize = new Size(32, 32);
     }
 
     @Override
@@ -65,10 +70,11 @@ public abstract class MovingEntity extends GameObject {
     public CollisionBox getCollisionBox() {
         return new CollisionBox(
                 new Rectangle(
-                        position.intX(),
-                        position.intY(),
-                        size.getWidth(),
-                        size.getHeight()
+                        //Centering the collision box:
+                        position.intX()- Game.SPRITE_SIZE / 2,
+                        position.intY()- Game.SPRITE_SIZE / 2,
+                        collisionBoxSize.getWidth(),
+                        collisionBoxSize.getHeight()
                 )
         );
     }

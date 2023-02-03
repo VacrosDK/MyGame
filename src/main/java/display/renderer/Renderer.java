@@ -1,6 +1,7 @@
-package display;
+package display.renderer;
 
 import core.Position;
+import display.Camera;
 import game.Game;
 import game.state.State;
 import map.GameMap;
